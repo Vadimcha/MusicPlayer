@@ -193,6 +193,10 @@ legend {
  * 3. Improve appearance and consistency in all browsers.
  */
 
+input {
+  border: none;
+}
+
 button,
 input,
 select,

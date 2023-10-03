@@ -1,0 +1,40 @@
+.greetings {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search_field {
+  position: relative;
+}
+
+.input {
+  font-size: 16px;
+  padding: 8px 0 8px 46px;
+  width: 400px;
+
+  border: 1px solid #949494;
+  border-radius: 15px;
+  background-color: #727272;
+  color: #ffffff;
+
+
+  &::placeholder {
+    font-size: 15px;
+    color: #D0D0D0;
+  }
+  &:focus {
+    border: 1px solid #B7B7B7;
+  }
+}
+
+.input_icon {
+  position: absolute;
+  left: 20px;
+  top: 8px
+}

@@ -1,5 +1,17 @@
-.main {
-  width: calc(100% - 260px);
-  padding: 0 130px;
+.wrapper {
+  width: calc(100% - 535px);
   height: 100%;
+
+  display: flex;
+}
+
+.main {
+  height: calc(100% - 70px);
+  width: calc(100% - 40px);
+
+  border-radius: 0 20px 20px 0;
+  background: rgba(141, 141, 141, 0.46);
+  backdrop-filter: blur(31.5px);
+
+  padding: 35px 20px;
 }
