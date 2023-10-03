@@ -11,7 +11,21 @@
 
   border-radius: 0 20px 20px 0;
   background: rgba(141, 141, 141, 0.46);
-  backdrop-filter: blur(31.5px);
+  backdrop-filter: blur(20px);
 
   padding: 35px 20px;
+}
+
+.mainContent {
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.leftPart {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 }

@@ -1,0 +1,47 @@
+.block {
+  border-radius: 20px;
+  background: rgba(206, 206, 206, 0.36);
+
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.titlePart {
+  display: flex;
+  gap: 10px;
+}
+
+.songImg {
+  width: 290px;
+  height: 240px;
+  background: #000000 url('/SongImage.jpg') center center/cover no-repeat;
+  border-radius: 20px;
+}
+
+.bottomPart {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.songDscr {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  &_title {
+    font-size: 18px;
+  }
+  &_artist {
+    font-size: 16px;
+    color: #D0D0D0;
+  }
+}
