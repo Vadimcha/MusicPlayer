@@ -1,0 +1,52 @@
+.sidebar {
+  width: 240px;
+  height: calc(100% - 70px);
+
+  background: rgba(206, 206, 206, 0.36);
+  backdrop-filter: blur(10px);
+
+  padding: 35px 20px;
+  border-radius: 20px 0px 0px 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.link {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+
+  width: calc(100% - 20px);
+  border-radius: 10px;
+  padding: 10px;
+
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.link:hover {
+  background: rgba(146, 146, 146, 0.25);
+}
+
+.title_part {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    font-size: 18px;
+  }
+  .seeAll {
+    font-size: 14px;
+    color: #D0D0D0;
+  }
+}
