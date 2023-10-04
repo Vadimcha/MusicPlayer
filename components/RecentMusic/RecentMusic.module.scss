@@ -10,9 +10,16 @@
 .titlePart {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 25px;
 }
 
 .seeAll {
   font-size: 14px;
   color: #D0D0D0;
+}
+
+.tracks {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }

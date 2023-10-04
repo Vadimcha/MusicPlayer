@@ -3,7 +3,7 @@
   height: calc(100% - 70px);
 
   background: rgba(206, 206, 206, 0.36);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
 
   padding: 35px 20px;
   border-radius: 20px 0 0 20px;
@@ -42,6 +42,8 @@
   justify-content: space-between;
   align-items: center;
 
+  margin-bottom: 20px;
+
   .title {
     font-size: 1.050rem;
   }
@@ -49,4 +51,10 @@
     font-size: 14px;
     color: #D0D0D0;
   }
+}
+
+.myCollection {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }

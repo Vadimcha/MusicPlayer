@@ -2,8 +2,12 @@ import React from 'react'
 import styles from './NowPlaying.module.scss'
 import { Activity, Heart } from 'lucide-react';
 import { Line } from '@/components/Line';
+import { Tracks } from '@/data/Tracks';
+import { ITrack } from '@/models/ITrack';
+import { Track } from '@/components/Track';
 
 export const NowPlaying = () => {
+  const tracks = Tracks;
   return (
     <div className={styles.block}>
       <div className={styles.titlePart}>
@@ -19,6 +23,14 @@ export const NowPlaying = () => {
         <Heart height={20} width={20} />
       </div>
       <Line color='ADADAD'/>
+      <div className={styles.queue}>
+        <p className={styles.queue_title}>Queue</p>
+        <div className={styles.queue_tracks}>
+          { tracks.map((track: ITrack) => {
+            return <Track track={track} key={track.id} with_play  />;
+          }) }
+        </div>
+      </div>
     </div>
   );
 };

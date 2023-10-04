@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Home, Music, Mic2, Disc } from 'lucide-react'
 import styles from './Sidebar.module.scss'
 import { Line } from '@/components/Line';
+import { YourCollection } from '@/components/Sidebar/YourCollection';
 
 export const Sidebar = () => {
   const links = [
@@ -43,6 +44,7 @@ export const Sidebar = () => {
           <p className={styles.title}>Your Collection</p>
           <Link href='#' className={styles.seeAll}>see all</Link>
         </div>
+        <YourCollection />
       </div>
     </div>
   );

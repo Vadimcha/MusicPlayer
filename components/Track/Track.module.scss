@@ -1,0 +1,52 @@
+.track {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.main {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+}
+.cover {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+}
+.title {
+  font-size: 16px;
+}
+.artist {
+  font-size: 14px;
+  color: #D0D0D0;
+}
+.duration {
+  font-size: 16px;
+  color: #D0D0D0;
+}
+.play {
+  position: relative;
+  outline: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+  background-color: #929292;
+  border-radius: 100px;
+  &_icon {
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-40%, -50%);
+  }
+  &:hover {
+    background-color: #BABABA;
+
+  }
+}
