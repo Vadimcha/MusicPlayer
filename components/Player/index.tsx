@@ -6,7 +6,7 @@ import styles from './Player.module.scss'
 import { Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume1 } from 'lucide-react';
 import { handleSoundTime } from '@/utils/handleSoundTime';
 
-export const Player = ({ audioSource = "/CLOUDS.mp3" }: { audioSource: string }) => {
+export const Player = ({ audioSource = "/CLOUDS.mp3" }: { audioSource?: string }) => {
   const track = Tracks[0];
 
   const [audio] = useState(new Audio(audioSource));
@@ -14,28 +14,53 @@ export const Player = ({ audioSource = "/CLOUDS.mp3" }: { audioSource: string })
 
   const [curTime, setCurTime] = useState(audio.currentTime);
   const [duration, setDuration] = useState(0);
-  const[percent, setPercent] = useState<number>(0);
+  const [percent, setPercent] = useState<number>(0);
+
+  const [volumePercent, setVolumePercent] = useState<number>(0.05);
 
   const togglePlay = () => {
     if (isPlaying) {
+      console.log(`BREAKPOINT PAUSE`)
+      setIsPlaying(false);
       audio.pause();
     } else {
+      console.log(`BREAKPOINT PLAY`)
+      setIsPlaying(true);
       audio.play();
     }
-    setIsPlaying(!isPlaying);
   };
 
   useEffect(() => {
-    const outside = document.getElementById('progressBar');
-    if (outside) {
-      outside.addEventListener('click', function(e) {
+    const songBar = document.getElementById('progressBar');
+    if (songBar) {
+      songBar.addEventListener('mousedown', function(e) {
         const xPosition = e.clientX - this.getBoundingClientRect().left;
-        const pct = Math.floor((xPosition / outside.offsetWidth) * 100);
-        console.log(`BREAKPOINT ${pct}`)
+        let pct = Math.floor((xPosition / songBar.offsetWidth) * 100);
+        if(pct < 0) pct = 0;
+        if(pct > 100) pct = 100;
+        console.log(`BREAKPOINT SONG ${pct}%`)
         audio.currentTime = audio.duration * pct / 100;
         setPercent(pct);
       }, false);
     }
+    const volumeBar = document.getElementById('progressVolumeBar');
+    if (volumeBar) {
+      volumeBar.addEventListener('mousedown', function(e) {
+        const xPosition = e.clientX - this.getBoundingClientRect().left;
+        let pct = Math.floor((xPosition / volumeBar.offsetWidth) * 100);
+        if(pct < 0) pct = 0;
+        if(pct > 100) pct = 100;
+        console.log(`BREAKPOINT VOLUME ${pct}%`)
+        audio.volume = pct / 100;
+        setVolumePercent(pct / 100);
+      }, false);
+    }
+
+    // document.addEventListener('keydown', function(event) { // TODO
+    //   if (event.key === ' ' || event.code === 'Space') {
+    //     togglePlay();
+    //   }
+    // });
   }, [])
 
   useEffect(() => {
@@ -79,6 +104,10 @@ export const Player = ({ audioSource = "/CLOUDS.mp3" }: { audioSource: string })
         </div>
         <div className={styles.volume}>
           <Volume1 width={25} height={25} />
+            <div className={styles.progressVolumeBar} id='progressVolumeBar'>
+              <div className={styles.volumeLine1} style={{ width: `${volumePercent * 100}%` }} />
+              <div className={styles.volumeLine2} style={{ width: `${100 - volumePercent * 100}%` }} />
+            </div>
         </div>
       </div>
     </div>

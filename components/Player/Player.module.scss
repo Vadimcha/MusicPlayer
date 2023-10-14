@@ -58,7 +58,8 @@
 .progressBar {
   cursor: pointer;
   width: 305px;
-  height: 8px;
+  padding: 5px;
+  height: 5px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -72,6 +73,35 @@
 }
 
 .line2 {
+  height: 3px;
+  border-radius: 0 5px 5px 0;
+  background-color: #5E5E5E;
+}
+
+.volume {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.progressVolumeBar {
+  cursor: pointer;
+  width: 80px;
+  height: 5px;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.volumeLine1 {
+  height: 3px;
+  border-radius: 5px 0 0 5px;
+  background-color: #fff;
+}
+
+.volumeLine2 {
   height: 3px;
   border-radius: 0 5px 5px 0;
   background-color: #5E5E5E;
