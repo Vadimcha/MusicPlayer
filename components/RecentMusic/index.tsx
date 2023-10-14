@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './RecentMusic.module.scss'
 import Link from 'next/link';
 import { Tracks } from '@/data/Tracks';
-import { ITrack } from '@/models/ITrack';
+import { ISong } from '@/models/ISong';
 import { Track } from '@/components/Track';
 import { Line } from '@/components/Line';
 
@@ -16,7 +16,7 @@ export const RecentMusic = () => {
         <Link href={'/recent-songs'}><p className={styles.seeAll}>see all</p></Link>
       </div>
       <div className={styles.tracks}>
-        { tracks.map((track: ITrack, index) => {
+        { tracks.map((track: ISong, index) => {
           return <>
             <Track track={track} key={track.id} with_duration with_play />
             {index == tracks.length - 1 ? '' : <Line color={'9C9C9C'}/>}

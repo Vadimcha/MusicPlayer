@@ -23,6 +23,10 @@
   top: 50%;
   left: 50%;
   transform: translate(-40%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .topPart {
@@ -43,4 +47,32 @@
 .pause {
   padding: 10px;
   background-color: #fff;
+}
+
+.progressWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progressBar {
+  cursor: pointer;
+  width: 305px;
+  height: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.line1 {
+  height: 3px;
+  border-radius: 5px 0 0 5px;
+  background-color: #fff;
+}
+
+.line2 {
+  height: 3px;
+  border-radius: 0 5px 5px 0;
+  background-color: #5E5E5E;
 }

@@ -1,7 +1,7 @@
-import { ITrack } from '@/models/ITrack';
+import { ISong } from '@/models/ISong';
 import { Artists } from '@/data/Artists';
 
-export const Tracks: ITrack[] = [
+export const Tracks: ISong[] = [
   {
     id: 0,
     name: 'Eve',

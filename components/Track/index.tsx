@@ -1,10 +1,10 @@
 import React from 'react'
 import styles from './Track.module.scss'
 import { Play } from 'lucide-react';
-import { ITrack } from '@/models/ITrack';
+import { ISong } from '@/models/ISong';
 
 interface TrackProps {
-  track: ITrack,
+  track: ISong,
   with_duration?: boolean,
   with_play?: boolean,
 }
