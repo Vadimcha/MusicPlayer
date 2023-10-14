@@ -4,10 +4,11 @@ import styles from './MainBackground.module.scss';
 
 export const MainBackground = () => {
   const videoList = [
-    "/BackVideo4.mp4",
-    "/BackVideo1.mp4",
-    "/BackVideo2.mp4",
-    "/BackVideo3.mp4",
+    "/BackVideos/BackVideo4.mp4",
+    "/BackVideos/BackVideo1.mp4",
+    "/BackVideos/BackVideo2.mp4",
+    "/BackVideos/BackVideo3.mp4",
+
   ]
   const [curVideo, setCurVideo] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
