@@ -1,80 +1,105 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import { Tracks } from '@/data/Tracks'
 import { Track } from '@/components/Track'
 import styles from './Player.module.scss'
 import { Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume1 } from 'lucide-react';
 import { handleSoundTime } from '@/utils/handleSoundTime';
+import { useSong } from '@/app/hooks/useSongs';
 
-export const Player = ({ audioSource = "/CLOUDS.mp3" }: { audioSource?: string }) => {
+export const Player = () => {
+  const { data: curSong, isLoading, isSuccess, isError } = useSong("2");
+
   const track = Tracks[0];
 
-  const [audio] = useState(new Audio(audioSource));
   const [isPlaying, setIsPlaying] = useState(false);
-
-  const [curTime, setCurTime] = useState(audio.currentTime);
+  const [curTime, setCurTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [percent, setPercent] = useState<number>(0);
+  const [volumePercent, setVolumePercent] = useState<number>(0.5);
 
-  const [volumePercent, setVolumePercent] = useState<number>(0.05);
+  const [audio, setAudio] = useState<HTMLAudioElement | undefined>();
 
   const togglePlay = () => {
-    if (isPlaying) {
-      console.log(`BREAKPOINT PAUSE`)
-      setIsPlaying(false);
-      audio.pause();
-    } else {
-      console.log(`BREAKPOINT PLAY`)
-      setIsPlaying(true);
-      audio.play();
+    if(audio) {
+      console.log(`IS PLAYING ${isPlaying}`)
+      if (isPlaying) {
+        console.log(`BREAKPOINT PAUSE`)
+        setIsPlaying(false);
+        audio.pause();
+      } else {
+        console.log(`BREAKPOINT PLAY`)
+        setIsPlaying(true);
+        audio.play();
+      }
     }
   };
+  useEffect(() => {
+    if(isSuccess) {
+      const aud = new Audio(curSong?.data);
+      aud.volume = volumePercent;
+      setAudio(aud);
+    }
+  }, [isSuccess]);
+  useEffect(() => {
+    if(audio) {
+      const songBar = document.getElementById('progressBar');
+      if (songBar) {
+        songBar.addEventListener('mousedown', function(e) {
+          if(audio) {
+            const xPosition = e.clientX - this.getBoundingClientRect().left;
+            let pct = Math.floor((xPosition / songBar.offsetWidth) * 100);
+            if (pct < 0) pct = 0;
+            if (pct > 100) pct = 100;
+            console.log(`BREAKPOINT SONG ${pct}%`)
+            audio.currentTime = audio.duration * pct / 100;
+            setPercent(pct);
+          }
+        }, false);
+      }
+      const volumeBar = document.getElementById('progressVolumeBar');
+      if (volumeBar) {
+        volumeBar.addEventListener('mousedown', function(e) {
+          if(audio) {
+            const xPosition = e.clientX - this.getBoundingClientRect().left;
+            let pct = Math.floor((xPosition / volumeBar.offsetWidth) * 100);
+            if(pct < 0) pct = 0;
+            if(pct > 100) pct = 100;
+            console.log(`BREAKPOINT VOLUME ${pct}%`)
+            audio.volume = pct / 100;
+            setVolumePercent(pct / 100);
+          }
+        }, false);
+      }
+    }
+  }, [audio])
+
+  const handler = (event: KeyboardEvent) => { // TODO
+    if (event.key === ' ' || event.code === 'Space' || event.keyCode == 32) {
+      console.log(`BREAKPOINT SPACE`)
+      togglePlay();
+    }
+  }
 
   useEffect(() => {
-    const songBar = document.getElementById('progressBar');
-    if (songBar) {
-      songBar.addEventListener('mousedown', function(e) {
-        const xPosition = e.clientX - this.getBoundingClientRect().left;
-        let pct = Math.floor((xPosition / songBar.offsetWidth) * 100);
-        if(pct < 0) pct = 0;
-        if(pct > 100) pct = 100;
-        console.log(`BREAKPOINT SONG ${pct}%`)
-        audio.currentTime = audio.duration * pct / 100;
-        setPercent(pct);
-      }, false);
-    }
-    const volumeBar = document.getElementById('progressVolumeBar');
-    if (volumeBar) {
-      volumeBar.addEventListener('mousedown', function(e) {
-        const xPosition = e.clientX - this.getBoundingClientRect().left;
-        let pct = Math.floor((xPosition / volumeBar.offsetWidth) * 100);
-        if(pct < 0) pct = 0;
-        if(pct > 100) pct = 100;
-        console.log(`BREAKPOINT VOLUME ${pct}%`)
-        audio.volume = pct / 100;
-        setVolumePercent(pct / 100);
-      }, false);
-    }
-
-    // document.addEventListener('keydown', function(event) { // TODO
-    //   if (event.key === ' ' || event.code === 'Space') {
-    //     togglePlay();
-    //   }
-    // });
-  }, [])
+    document.addEventListener("keydown", handler)
+    return () => document.removeEventListener("keydown", handler)
+  }, [audio, isPlaying])
 
   useEffect(() => {
-    audio.addEventListener('durationchange', () => {
-      setDuration(audio.duration);
-      setPercent(audio.currentTime * 100 / audio.duration)
-    })
-    audio.addEventListener('timeupdate', () => {
-      setCurTime(audio.currentTime);
-      setPercent(audio.currentTime * 100 / audio.duration)
-    })
-    audio.addEventListener('ended', () => {
-      setIsPlaying(false);
-    });
+    if(audio) {
+      audio.addEventListener('durationchange', () => {
+        setDuration(audio.duration);
+        setPercent(audio.currentTime * 100 / audio.duration)
+      })
+      audio.addEventListener('timeupdate', () => {
+        setCurTime(audio.currentTime);
+        setPercent(audio.currentTime * 100 / audio.duration)
+      })
+      audio.addEventListener('ended', () => {
+        setIsPlaying(false);
+      });
+    }
   }, [audio]);
 
   return (

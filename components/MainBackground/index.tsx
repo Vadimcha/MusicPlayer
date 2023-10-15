@@ -6,9 +6,8 @@ export const MainBackground = () => {
   const videoList = [
     "/BackVideos/BackVideo4.mp4",
     "/BackVideos/BackVideo1.mp4",
-    "/BackVideos/BackVideo2.mp4",
     "/BackVideos/BackVideo3.mp4",
-
+    "/BackVideos/BackVideo2.mp4",
   ]
   const [curVideo, setCurVideo] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);

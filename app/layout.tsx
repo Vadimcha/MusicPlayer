@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import './globals.css'
 import './reset.css'
@@ -5,17 +6,12 @@ import styles from './Layout.module.scss'
 import { TimeBlock } from '@/components/TimeBlock';
 import { Player } from '@/components/Player';
 import { ubuntuMono } from '@/app/fonts';
-import type { Metadata } from 'next'
 import { MainBackground } from '@/components/MainBackground';
+import Head from 'next/head';
+import { QueryClient } from '@tanstack/query-core';
+import { QueryClientProvider } from '@tanstack/react-query';
 
-export const metadata: Metadata = {
-  title: 'MyMusicPlayer',
-  description: 'Just my music player',
-  icons: {
-    icon: '/favicon.png'
-  }
-}
-
+const queryClient = new QueryClient();
 export default function RootLayout({
   children,
 }: {
@@ -24,15 +20,18 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <head>
-        <link rel="shortcut icon" href="img/logo.svg" />
-      </head>
-      <body className={`${ubuntuMono.className} ${styles.main}`}>
-        <MainBackground />
-        <TimeBlock />
-        {children}
-        <Player />
-      </body>
+      <Head>
+        <title>MyMusicPlayer</title>
+        <link rel="shortcut icon" href="/favicon.png" />
+      </Head>
+      <QueryClientProvider client={queryClient}>
+        <body className={`${ubuntuMono.className} ${styles.main}`}>
+          <MainBackground />
+          <TimeBlock />
+          {children}
+          <Player />
+        </body>
+      </QueryClientProvider>
     </html>
   )
 }
