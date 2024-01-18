@@ -25,11 +25,12 @@ model Album {
 }
 
 model Song {
-  id       Int     @id @default(autoincrement())
-  name     String
-  artist   Artist? @relation(fields: [artistId], references: [id])
-  album    Album?  @relation(fields: [albumId], references: [id])
-  data     String
-  artistId Int
-  albumId  Int
+  id        Int     @id @default(autoincrement())
+  name      String
+  artist    Artist? @relation(fields: [artistId], references: [id])
+  album     Album?  @relation(fields: [albumId], references: [id])
+  data      String
+  artistId  Int
+  albumId   Int
+  songCover String?
 }

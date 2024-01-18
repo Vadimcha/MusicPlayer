@@ -5,10 +5,11 @@ import { Tracks } from '@/data/Tracks';
 import { ISong } from '@/models/ISong';
 import { Track } from '@/components/Track';
 import { Line } from '@/components/Line';
+import { Artists } from '@/data/Artists';
 
 export const RecentMusic = () => {
   const tracks = Tracks;
-
+  const artists = Artists;
   return (
     <div className={styles.block}>
       <div className={styles.titlePart}>
@@ -18,7 +19,7 @@ export const RecentMusic = () => {
       <div className={styles.tracks}>
         { tracks.map((track: ISong, index) => {
           return <>
-            <Track track={track} key={track.id} with_duration with_play />
+            <Track track={tracks[0]} artist={artists[0]} key={index} with_duration with_play />
             {index == tracks.length - 1 ? '' : <Line color={'9C9C9C'}/>}
           </>
         }) }

@@ -1,16 +1,22 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Tracks } from '@/data/Tracks'
 import { Track } from '@/components/Track'
 import styles from './Player.module.scss'
 import { Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume1 } from 'lucide-react';
 import { handleSoundTime } from '@/utils/handleSoundTime';
-import { useSong } from '@/app/hooks/useSongs';
+import { useSong } from '@/hooks/useSongs';
+import { useArtist } from '@/hooks/useArtist';
 
 export const Player = () => {
-  const { data: curSong, isLoading, isSuccess, isError } = useSong("2");
+  const { data: curSong, isSuccess } = useSong("2");
+  const { data: artist } = useArtist(curSong?.artist);
 
-  const track = Tracks[0];
+  useEffect(() => {
+    console.log('BREAKPOINT FROM PLAYER', curSong);
+  }, [curSong])
+  useEffect(() => {
+    console.log('BREAKPOINT FROM PLAYER', artist);
+  }, [artist])
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [curTime, setCurTime] = useState(0);
@@ -41,31 +47,33 @@ export const Player = () => {
       setAudio(aud);
     }
   }, [isSuccess]);
+
+  const ProgressChangeHandler = (e: MouseEvent, elem: HTMLElement) => {
+    const xPosition = e.clientX - elem.getBoundingClientRect().left;
+    let pct = Math.floor((xPosition / elem.offsetWidth) * 100);
+    if (pct < 0) pct = 0;
+    if (pct > 100) pct = 100;
+    return pct;
+  }
+
   useEffect(() => {
     if(audio) {
       const songBar = document.getElementById('progressBar');
       if (songBar) {
         songBar.addEventListener('mousedown', function(e) {
           if(audio) {
-            const xPosition = e.clientX - this.getBoundingClientRect().left;
-            let pct = Math.floor((xPosition / songBar.offsetWidth) * 100);
-            if (pct < 0) pct = 0;
-            if (pct > 100) pct = 100;
-            console.log(`BREAKPOINT SONG ${pct}%`)
+            const pct = ProgressChangeHandler(e, songBar);
             audio.currentTime = audio.duration * pct / 100;
             setPercent(pct);
           }
         }, false);
       }
+
       const volumeBar = document.getElementById('progressVolumeBar');
       if (volumeBar) {
         volumeBar.addEventListener('mousedown', function(e) {
           if(audio) {
-            const xPosition = e.clientX - this.getBoundingClientRect().left;
-            let pct = Math.floor((xPosition / volumeBar.offsetWidth) * 100);
-            if(pct < 0) pct = 0;
-            if(pct > 100) pct = 100;
-            console.log(`BREAKPOINT VOLUME ${pct}%`)
+            const pct = ProgressChangeHandler(e, volumeBar);
             audio.volume = pct / 100;
             setVolumePercent(pct / 100);
           }
@@ -74,13 +82,12 @@ export const Player = () => {
     }
   }, [audio])
 
-  const handler = (event: KeyboardEvent) => { // TODO
+  const handler = (event: KeyboardEvent) => {
     if (event.key === ' ' || event.code === 'Space' || event.keyCode == 32) {
       console.log(`BREAKPOINT SPACE`)
       togglePlay();
     }
   }
-
   useEffect(() => {
     document.addEventListener("keydown", handler)
     return () => document.removeEventListener("keydown", handler)
@@ -106,7 +113,10 @@ export const Player = () => {
     <div>
       <div className={styles.player}>
         <div className={styles.meta}>
-          <Track track={track}/>
+          {
+            (artist && curSong) ? <Track track={curSong} artist={artist}/> :
+            <p>Loading...</p>
+          }
         </div>
         <div className={styles.funcPart}>
           <div className={styles.topPart}>

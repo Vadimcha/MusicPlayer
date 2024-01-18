@@ -5,9 +5,12 @@ import { Line } from '@/components/Line';
 import { Tracks } from '@/data/Tracks';
 import { ISong } from '@/models/ISong';
 import { Track } from '@/components/Track';
+import { Artists } from '@/data/Artists';
 
 export const NowPlaying = () => {
   const tracks = Tracks;
+  const artists = Artists;
+
   return (
     <div className={styles.block}>
       <div className={styles.titlePart}>
@@ -26,8 +29,8 @@ export const NowPlaying = () => {
       <div className={styles.queue}>
         <p className={styles.queue_title}>Queue</p>
         <div className={styles.queue_tracks}>
-          { tracks.map((track: ISong) => {
-            return <Track track={track} key={track.id} with_play  />;
+          { tracks.map((track: ISong, ind: number) => {
+            return <Track track={tracks[0]} artist={artists[0]} key={ind} with_play  />;
           }) }
         </div>
       </div>
